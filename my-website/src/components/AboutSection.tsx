@@ -34,6 +34,7 @@ export default function AboutSection({
               <img
                 src={photoUrl}
                 alt={name}
+                onError={() => setImageError(true)}
                 className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-xl"
               />
             ) : (
