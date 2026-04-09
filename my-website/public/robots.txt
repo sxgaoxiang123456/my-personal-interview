@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sxgaoxiang123456.github.io/my-website/sitemap.xml
