@@ -11,8 +11,13 @@
     "deploy": "vite build && npx gh-pages -d dist"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.14.1",
+    "recharts": "^3.8.1",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
