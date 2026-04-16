@@ -39,3 +39,13 @@ lerna-debug.log*
 
 # Editor
 *.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Database
+*.db
+*.sqlite
+*.sqlite3

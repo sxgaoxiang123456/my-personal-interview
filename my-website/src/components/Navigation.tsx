@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 interface NavigationProps {
   brand?: string
@@ -12,6 +14,8 @@ const NAV_LINKS = [
 
 export default function Navigation({ brand = '高翔' }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
+  const { accessToken } = useAuth()
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     const target = document.querySelector(href)
@@ -24,6 +28,15 @@ export default function Navigation({ brand = '高翔' }: NavigationProps) {
     setIsOpen(false)
   }
 
+  const handleCtaClick = () => {
+    setIsOpen(false)
+    if (accessToken) {
+      navigate('/dashboard')
+    } else {
+      navigate('/login?redirect=/dashboard')
+    }
+  }
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-gray-200 dark:border-gray-800">
       <div className="h-16 px-4 flex items-center justify-between">
@@ -33,19 +46,27 @@ export default function Navigation({ brand = '高翔' }: NavigationProps) {
         </a>
 
         {/* PC端导航链接（md及以上） */}
-        <ul className="hidden md:flex space-x-8">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex items-center space-x-8">
+          <ul className="flex space-x-8">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <button
+            onClick={handleCtaClick}
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-medium hover:from-blue-600 hover:to-indigo-700 transition-all shadow-sm"
+          >
+            AI学习站
+          </button>
+        </div>
 
         {/* 移动端汉堡菜单按钮（md以下） */}
         <button
@@ -81,6 +102,15 @@ export default function Navigation({ brand = '高翔' }: NavigationProps) {
               </li>
             ))}
           </ul>
+          <div className="px-4 pb-3">
+            <hr className="border-gray-200 dark:border-gray-700 mb-3" />
+            <button
+              onClick={handleCtaClick}
+              className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-full text-sm font-medium hover:from-blue-600 hover:to-indigo-700 transition-all"
+            >
+              AI学习站
+            </button>
+          </div>
         </div>
       )}
     </nav>
